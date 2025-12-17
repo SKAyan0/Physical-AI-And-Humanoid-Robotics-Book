@@ -9,7 +9,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://physical-ai-and-humanoid-robotics-b-orpin.vercel.app/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub Pages: https://<USERNAME>.github.io/<REPO>/
   baseUrl: '/',
@@ -69,7 +69,7 @@ const config = {
             label: 'Book Content',
           },
           {
-            href: 'https://github.com/your-org/physical-ai-book',
+            href: 'https://github.com/SKAyan0/Physical-AI-And-Humanoid-Robotics-Book',
             label: 'GitHub',
             position: 'right',
           },
@@ -104,7 +104,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/your-org/physical-ai-book',
+                href: 'https://github.com/SKAyan0/Physical-AI-And-Humanoid-Robotics-Book',
               },
             ],
           },
