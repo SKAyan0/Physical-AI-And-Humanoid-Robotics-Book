@@ -1,0 +1,167 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+.ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.cov/
+.coverage.*
+
+# Docusaurus build outputs
+frontend/docs/.docusaurus/
+frontend/docs/build/
+frontend/docs/node_modules/
+frontend/docs/dist/
+
+# Backend build files
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+
+# Database files
+*.db
+*.sqlite
+
+# Local configuration files
+.settings/
+.local/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Documentation builds
+docs/_build/
+_site/
+
+# Node modules in other locations
+node_modules/
+
+# Ignore specific build artifacts
+*.so
+*.dylib
+*.dll
+
+# Coverage
+.coverage
+htmlcov/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# mypy
+.mypy_cache/
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Eclipse
+.project
+.pydevproject
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# Desktop files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+__pycache__/
+*.so
+.py
+.py[co]
+*$py.class
+*$pyc.class
+*$pyo.class
+*$pyd.class
+*$pyi.class
+*$pyw.class
+*$pyz.class
+*$pyzw.class
+*$pyo
+*$pyc
+*$pyd
+*$pyi
+*$pyw
+*$pyz
+*$pyzw
+*.so
+*.py.class
+*.pyc.class
+*.pyo.class
+*.pyd.class
+*.pyi.class
+*.pyw.class
+*.pyz.class
+*.pyzw.class

@@ -1,0 +1,286 @@
+openapi: 3.0.0
+info:
+  title: RAG Chatbot API for Robotics Book
+  description: API for interacting with the RAG system to answer questions about robotics book content
+  version: 1.0.0
+servers:
+  - url: https://robotics-book-rag.onrender.com/api
+    description: Production server
+  - url: http://localhost:8000/api
+    description: Development server
+
+paths:
+  /chat/query:
+    post:
+      summary: Submit a query to the RAG system
+      description: Process a user query and return a response based on book content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Successful response with answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /chat/query-by-selection:
+    post:
+      summary: Submit a query based on selected text
+      description: Process a query about selected text from the book content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelectionQueryRequest'
+      responses:
+        '200':
+          description: Successful response with answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /content/search:
+    post:
+      summary: Search book content
+      description: Search for relevant content based on query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /health:
+    get:
+      summary: Health check
+      description: Check if the RAG service is operational
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+components:
+  schemas:
+    QueryRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The user's question
+          example: "How do I create a ROS 2 node in Python?"
+        context:
+          type: object
+          description: Additional context for the query
+          properties:
+            module:
+              type: string
+              description: Module to limit search scope
+              example: "Module 1"
+            chapter:
+              type: string
+              description: Chapter to limit search scope
+              example: "Chapter 1.2"
+
+    SelectionQueryRequest:
+      type: object
+      required:
+        - selected_text
+        - query
+      properties:
+        selected_text:
+          type: string
+          description: The text selected by the user
+          example: "A ROS 2 node is an entity that performs computation in the ROS graph."
+        query:
+          type: string
+          description: The user's question about the selected text
+          example: "Can you explain this concept further?"
+        context:
+          type: object
+          description: Additional context for the query
+          properties:
+            module:
+              type: string
+              description: Module where text was selected
+              example: "Module 1"
+            chapter:
+              type: string
+              description: Chapter where text was selected
+              example: "Chapter 1.1"
+
+    QueryResponse:
+      type: object
+      required:
+        - response
+        - confidence
+        - sources
+      properties:
+        response:
+          type: string
+          description: The answer to the user's query
+          example: "A ROS 2 node is an entity that performs computation in the ROS graph..."
+        confidence:
+          type: number
+          description: Confidence score of the response (0-1)
+          format: float
+          example: 0.92
+        sources:
+          type: array
+          description: Source chunks used to generate the response
+          items:
+            type: object
+            properties:
+              module:
+                type: string
+                description: Module of the source
+                example: "Module 1"
+              chapter:
+                type: string
+                description: Chapter of the source
+                example: "Chapter 1.1"
+              content_preview:
+                type: string
+                description: Preview of the source content
+                example: "A ROS 2 node is an entity that performs computation..."
+
+    SearchRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The search query
+          example: "ROS 2 nodes and services"
+        filters:
+          type: object
+          description: Filters to apply to the search
+          properties:
+            module:
+              type: string
+              description: Limit search to specific module
+              example: "Module 1"
+            max_results:
+              type: integer
+              description: Maximum number of results to return
+              default: 5
+              example: 3
+
+    SearchResponse:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+              - content
+              - module
+              - chapter
+              - score
+            properties:
+              content:
+                type: string
+                description: The content chunk
+                example: "A ROS 2 node is an entity that performs computation in the ROS graph..."
+              module:
+                type: string
+                description: Module containing the content
+                example: "Module 1"
+              chapter:
+                type: string
+                description: Chapter containing the content
+                example: "Chapter 1.1"
+              score:
+                type: number
+                description: Relevance score (0-1)
+                format: float
+                example: 0.87
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error type
+          example: "invalid_request"
+        message:
+          type: string
+          description: Error message
+          example: "Query parameter is required"
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+      properties:
+        status:
+          type: string
+          description: Health status
+          example: "healthy"
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the health check
+          example: "2025-12-15T10:30:00Z"
