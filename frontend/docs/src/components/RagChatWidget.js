@@ -58,7 +58,7 @@ const RagChatWidget = () => {
   useEffect(() => {
     const createSession = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/v1/sessions/', {
+        const response = await fetch('https://beastfrog145-h1chat.hf.space/api/v1/sessions/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ const RagChatWidget = () => {
       };
 
       // Send message to backend
-      const response = await fetch('http://localhost:8000/api/v1/chat/query', {
+      const response = await fetch('https://beastfrog145-h1chat.hf.space/api/v1/chat/query', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
