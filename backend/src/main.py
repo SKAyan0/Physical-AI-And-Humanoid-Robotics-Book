@@ -108,7 +108,9 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, configure specific origins
+    allow_origins=["*",
+    "https://physical-ai-and-humanoid-robotics-b-orpin.vercel.app/"
+    ],  # In production, configure specific origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
